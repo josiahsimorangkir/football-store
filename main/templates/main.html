@@ -1,8 +1,36 @@
 <h1>Football Store</h1>
+<h2>Welcome to the Football Store</h2>
+<h3>Toko Olahraga terbaik di Indonesia pertiwi ini - Josiah Naphta Simorangkir 2406414593 PBP F</h3>
 
-<h5>Store Name: </h5>
-<p>{{ app_name }}</p>
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}</p>
+<a href="{% url 'main:create_product' %}">
+  <button>+ Add Product</button>
+</a>
+
+<hr>
+
+{% if not product_list %}
+<p>Belum ada data produk pada football store.</p>
+{% else %}
+
+{% for product in product_list %}
+<div>
+  <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
+
+  <p><b>{{ product.category }}</b>{% if product.is_featured %} | 
+    <b>Hot</b>{% endif %} {% if product.created_at %}| 
+    <i>{{ product.created_at|date:"d M Y H:i" }}</i>{% endif %}</p>
+
+  {% if product.thumbnail %}
+  <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
+  <br />
+  {% endif %}
+
+  <p>{{ product.description|truncatewords:25 }}...</p>
+
+  <p><a href="{% url 'main:show_product' product.id %}"><button>Read More</button></a></p>
+</div>
+
+<hr>
+{% endfor %}
+
+{% endif %}
