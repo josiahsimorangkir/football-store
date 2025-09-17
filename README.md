@@ -6,6 +6,8 @@ Kelas: PBP F
 
 Tautan PWS: https://josiah-naphta-footballstore.pbp.cs.ui.ac.id/
 
+# Tugas 2
+
 Poin 1: Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
   Step 1: Buat proyek django
@@ -103,3 +105,50 @@ Poin 5: Menurut Anda, dari semua framework yang ada, mengapa framework Django di
 Poin 6: Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 
   Menurut saya asdos tutorial 1 sudah sangat baik dan jelas dalam memberikan tutorial. Maka dari itu dari saya tidak ada saran ataupun kritik.
+
+# Tugas 3
+
+Pertanyaan 1:  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+
+Dalam pengembangan sebuah platform, data delivery berguna karena untuk komunikasi antar stack dengan menggunakan format standar seperti HTML, XML, dan JSON. HTML biasanya digunakan untuk menyampaikan data dalam bentuk tampilan, sementara XML dan JSON lebih sering dipakai untuk pertukaran data antar sistem karena bersifat terstruktur, mudah dibaca. Dengan adanya mekanisme data delivery, platform dapat mengirim dan menerima data.
+
+Pertanyaan 2: Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+
+JSON lebih populer dibandingkan XML karena strukturnya yang lebih ringkas, sederhana, dan mudah dipahami. JSON menggunakan format key–value yang langsung cocok dengan struktur data pada bahasa pemrograman modern, sehingga proses parsing dan manipulasi data menjadi lebih cepat, terutama untuk aplikasi web dan mobile. Selain itu, JSON memiliki ukuran yang lebih kecil yang membuat transfer data melalui jaringan lebih ringan dibandingkan XML yang banyak menggunakan tag pembuka dan penutup.Jadi menurut saya JSON lebih baik.
+
+Pertanyaan 3: Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+
+Method is_valid() pada form Django berfungsi untuk memvalidasi data yang dikirimkan melalui form. Saat form menerima input dari user, Django memeriksa apakah semua field sudah diisi sesuai aturan yang didefinisikan di dalam form. Jika semua data lolos validasi, is_valid() akan mengembalikan True dan kita bisa mengakses data yang sudah dibersihka. Sebaliknya, jika ada kesalahan, is_valid() akan mengembalikan False dan semua pesan error akan disimpan di dalam atribut errors.
+
+Pertanyaan 4: Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+csrf_token pada Django diperlukan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF), yaitu serangan di mana penyerang memanfaatkan browser korban yang sudah login untuk mengirimkan permintaan berbahaya. Token ini memastikan setiap request yang dapat mengubah data (seperti POST, PUT, DELETE) benar-benar berasal dari halaman aplikasi kita, bukan dari situs lain. Jika csrf_token tidak digunakan, penyerang dapat membuat halaman berisi form tersembunyi atau script yang otomatis mengirim permintaan ke server menggunakan cookie sesi korban, sehingga aksi penting seperti mengubah password, melakukan transfer, atau menghapus data bisa dieksekusi secara ilegal.
+
+Pertanyaan 5: Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Buat folder templates pada direktori utama dan buat sebuah berkas HTML baru bernama base.html.
+2. Menambahkan BASE_DIR / 'templates' ke dalam INSTALLED APPS yang ada di settings.py
+3. Buat berkas baru pada direktori main dengan nama forms.py untuk membuat struktur form yang dapat menerima data Product baru. Isi field dengan atribut-atribut yang dibutuhkan.
+4. Ubah main.html sesuai dengan keinginan dan kebutuhan yang diperlukan sebuah website toko olahraga. Buat juga create_product.html dan product_detail.html untuk menampilkan halaman form input dan detail produk.
+5. Tambahkan entri url proyek pws pada CSRF_TRUSTED_ORIGINS di settings.py
+6. Tambahkan beberapa import pada views.py lalu tambahkan fungsi create_product(), show_product(), show_xml(), show_json(), show_xml_by_id(), dan show_json_by_id().
+7. Import fungsi yang sudah dibuat ke dalam urls.py pada direktori main
+8. Terakhir, tambahkan path URL ke dalam urlpatterns
+
+Pertanyaan 6: Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+
+Tidak ada
+
+Screenshot Postman
+<img width="1817" height="884" alt="image" src="https://github.com/user-attachments/assets/238f7dba-ee96-4874-b4bc-01bbcc1b54cb" />
+
+<img width="1818" height="891" alt="image" src="https://github.com/user-attachments/assets/1acbef3d-8ca8-4c30-910b-44aac76f21a7" />
+
+
+<img width="1804" height="799" alt="image" src="https://github.com/user-attachments/assets/c21913dc-5fd7-460e-9474-f112fdf5bcca" />
+
+<img width="1819" height="872" alt="image" src="https://github.com/user-attachments/assets/beb28a39-6078-45f5-9c53-d13767f67654" />
+
+
+
+
