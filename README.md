@@ -221,3 +221,30 @@ Django menangani hal tersebut dengan:
   22. Ubah fungsi create_product agar setiap objek yang dibuat akan secara otomatis terhubung dengan pengguna yang membuatnya.
   23. Modifikasi fungsi show_main agar dilengkapi dengan filter artikel berdasarkan penulis
   24. Tambahkan tombol filter My dan All pada halaman main.html dan juga tampilkan nama author di product_detail.html
+
+
+# Tugas 5
+
+## Soal 1: Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Ketika sebuah elemen HTML memiliki beberapa CSS selector yang memengaruhi tampilannya, browser akan menentukan aturan mana yang dipakai berdasarkan specificity. Urutan prioritasnya dimulai dari inline style (ditulis langsung pada atribut style di elemen) yang memiliki prioritas tertinggi, kemudian disusul oleh ID selector (#id), class/attribute/pseudo-class selector (.class, [attr], :hover), lalu element/tag selector (p, div, h1) yang memiliki prioritas paling rendah. Selain itu, jika ada deklarasi !important, maka aturan tersebut akan mengalahkan semua prioritas lainnya meskipun sebaiknya digunakan hanya jika benar-benar diperlukan.
+
+
+## Soal 2:  Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design penting dalam pengembangan aplikasi web karena memastikan tampilan situs dapat menyesuaikan dengan berbagai ukuran layar, baik desktop, tablet, maupun smartphone. Dengan adanya responsive design, pengalaman pengguna menjadi lebih nyaman, akses lebih mudah, dan performa SEO juga lebih baik karena mesin pencari seperti Google memprioritaskan website yang mobile-friendly. Contoh aplikasi yang sudah menerapkan responsive design adalah Tokopedia atau Instagram Web, di mana tampilan tetap enak digunakan meskipun dibuka di layar kecil. Sebaliknya, beberapa situs lama dengan layout fixed width belum responsive, sehingga tampilannya menjadi terlalu kecil di perangkat mobile dan pengguna harus melakukan zoom untuk membaca konten.
+
+
+## Soal 3: Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Dalam CSS, margin, border, dan padding adalah bagian dari box model yang mengatur ruang di sekitar elemen. Margin adalah jarak di luar border yang memisahkan elemen dari elemen lain di sekitarnya. Border adalah garis yang mengelilingi padding dan konten, sehingga menjadi pembatas visual elemen. Sementara itu, padding adalah ruang di dalam border, yang memisahkan konten dari garis tepi elemen. Dengan kata lain, urutannya dari luar ke dalam adalah margin → border → padding → konten. Masing-masing dapat diatur menggunakan properti CSS seperti margin:, border:, dan padding: untuk menyesuaikan tampilan elemen sesuai kebutuhan.
+
+## Soal 4:  Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox dan Grid Layout adalah dua sistem tata letak modern di CSS yang memudahkan pengaturan elemen. Flexbox bekerja secara satu dimensi, artinya pengaturan elemen hanya berfokus pada satu arah, entah itu baris (horizontal) atau kolom (vertikal). Flexbox sangat cocok digunakan untuk membuat navbar, card yang berjajar, atau melakukan alignment agar elemen berada di tengah. Di sisi lain, Grid Layout bekerja secara dua dimensi, sehingga dapat mengatur elemen baik dalam baris maupun kolom secara bersamaan. Grid sangat berguna untuk membuat layout yang kompleks, seperti dashboard atau galeri gambar. Singkatnya, flexbox lebih tepat untuk layout sederhana linear, sedangkan grid lebih kuat untuk layout yang kompleks dan dua arah.
+
+## Soal 5: Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+  1. Menambahkan tailwind ke aplikasi
+  2. Buat fungsi edit_product pada views.py
+  3. Buat berkas baru bernama edit_product.html
+  4. Import fungsi tersebut di urls.py dan tambahkan pathnya ke urlpatterns
+  5. Buat fungsi baru bernama delete_news di views.py
+  6. Import fungsi dan tambahkan path url ke urlpatterns di urls.py
+  7. Modifikasi main.html, create_product.html, product_detail.html, login.html, register.html, card_product.html, edit_product.html, dan navbar.html
+  8. Menggunakan tema biru sebagai perubahan utama pada desain dan menambahkan sedikit shadow dan hovering.
