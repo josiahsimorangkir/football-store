@@ -248,3 +248,26 @@ Flexbox dan Grid Layout adalah dua sistem tata letak modern di CSS yang memudahk
   6. Import fungsi dan tambahkan path url ke urlpatterns di urls.py
   7. Modifikasi main.html, create_product.html, product_detail.html, login.html, register.html, card_product.html, edit_product.html, dan navbar.html
   8. Menggunakan tema biru sebagai perubahan utama pada desain dan menambahkan sedikit shadow dan hovering.
+
+
+  # Tugas 6
+
+  ## Soal 1:  Apa perbedaan antara synchronous request dan asynchronous request?
+
+  Pada synchronous request, browser harus menunggu respons dari server sebelum bisa melanjutkan aktivitas lain. Akibatnya, halaman akan direload setiap kali ada permintaan baru. Sebaliknya, asynchronous request (seperti AJAX) memungkinkan browser mengirim dan menerima data tanpa menghentikan proses lain. Hal ini membuat halaman tetap aktif dan terasa lebih cepat karena hanya bagian tertentu yang diperbarui.
+
+  ## Soal 2: Bagaimana AJAX bekerja di Django (alur request–response)?
+
+  AJAX bekerja dengan mengirim permintaan dari JavaScript ke view Django tanpa memuat ulang halaman. Ketika pengguna melakukan aksi seperti menambah produk, fungsi JavaScript akan mengirim data ke endpoint Django melalui fetch(). Django memproses data tersebut dan mengirim kembali respons dalam bentuk JSON. Hasilnya kemudian ditampilkan secara dinamis di halaman melalui manipulasi DOM, sehingga perubahan langsung terlihat oleh user.
+
+  ## Soal 3: Keuntungan menggunakan AJAX dibandingkan render biasa
+
+  Keuntungan utama AJAX adalah kecepatan dan efisiensi. Karena tidak perlu memuat ulang seluruh halaman, waktu respon menjadi lebih singkat dan penggunaan data lebih hemat. Selain itu, user experience juga meningkat karena ui terasa lebih menarik dan responsif. AJAX juga memudahkan pembuatan fitur-fitur modern seperti pencarian langsung atau pembaruan data secara real-time.
+
+  ## Soal 4: Keamanan saat menggunakan AJAX untuk Login dan Register
+
+  Untuk menjaga keamanan, setiap permintaan POST yang dikirim lewat AJAX harus menyertakan token CSRF agar tidak rentan terhadap serangan Cross-Site Request Forgery. Django sudah menyediakan mekanisme ini secara otomatis. Selain itu, semua komunikasi sebaiknya menggunakan HTTPS agar data pengguna tidak mudah disadap. Validasi tetap dilakukan di server, dan endpoint yang sensitif sebaiknya dibatasi dengan @login_required.
+
+  ## Soal 5: Pengaruh AJAX terhadap User Experience (UX)
+
+  AJAX memberikan pengalaman user yang lebih baik karena membuat interaksi terasa cepat dan responsif. Pengguna tidak perlu menunggu halaman direfresh untuk melihat hasil aksinya. Notifikasi, update data, dan konfirmasi dapat muncul dengan cepat, sehingga website terasa lebih smooth. AJAX membantu membuat web terasa seperti aplikasi interaktif dengan alur penggunaan yang nyaman.
