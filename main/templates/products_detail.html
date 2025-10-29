@@ -62,9 +62,6 @@
           <time id="product-date">
             <!-- Date -->
           </time>
-          <span id="product-views">
-            <!-- Views -->
-          </span>
         </div>
       </div>
 
@@ -105,7 +102,6 @@ const articleContent = document.getElementById('product-content');
 const badgesContainer = document.getElementById('product-badges');
 const articleTitle = document.getElementById('product-title');
 const articleDate = document.getElementById('product-date');
-const articleViews = document.getElementById('product-views');
 const featuredImageContainer = document.getElementById('product-thumbnail-container');
 const featuredImage = document.getElementById('product-thumbnail');
 const articleContentText = document.getElementById('product-description');
@@ -151,7 +147,6 @@ function renderArticle(product) {
         year: 'numeric', month: 'long', day: 'numeric'
     });
     articleDate.textContent = formattedDate;
-    articleViews.textContent = `${product.product_views ?? 0} views`;
 
     // Set image
     if (product.thumbnail) {

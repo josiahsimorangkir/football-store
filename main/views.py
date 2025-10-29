@@ -119,37 +119,55 @@ def show_json_by_id(request, product_id):
 # AUTH
 # ===============================
 def register(request):
-    form = UserCreationForm()
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your account has been successfully created!')
-            return redirect('main:login')
-    context = {'form': form}
-    return render(request, 'register.html', context)
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            if form.is_valid():
+                form.save()
+                return JsonResponse({"status": "success"})
+            else:
+                return JsonResponse({"status": "error", "errors": form.errors})
+        else:
+            if form.is_valid():
+                form.save()
+                return redirect("main:login")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "register.html", {"form": form})
+
 
 
 def login_user(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            response = HttpResponseRedirect(reverse("main:show_main"))
+            response = JsonResponse({
+                "status": "success",
+                "redirect_url": reverse("main:show_main")
+            })
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
-    else:
-        form = AuthenticationForm(request)
-    context = {'form': form}
-    return render(request, 'login.html', context)
+        return JsonResponse({"status": "error", "errors": form.errors}, status=400)
+
+    form = AuthenticationForm(request)
+    return render(request, "login.html", {"form": form})
 
 
+
+
+@login_required(login_url='/login')
 def logout_user(request):
-    logout(request)
-    response = HttpResponseRedirect(reverse('main:login'))
-    response.delete_cookie('last_login')
-    return response
+    if request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        logout(request)
+        response = JsonResponse({"status": "success"})
+        response.delete_cookie('last_login')
+        return response
+
+    return JsonResponse({"status": "invalid_request"}, status=400)
+
 
 
 # ===============================

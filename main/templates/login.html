@@ -1,128 +1,108 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Login - Football Store</title>
+<title>Login | CoachGear</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="bg-gray-50 w-full min-h-screen flex items-center justify-center p-6 sm:p-8">
-  <div class="max-w-md w-full">
-    <div class="bg-white rounded-xl border border-gray-200 shadow-md p-6 sm:p-8">
+<section class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-8 border border-gray-100">
+    
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-extrabold text-blue-600 mb-2">Sign In</h1>
+      <p class="text-gray-600">Welcome back to <span class="font-semibold">Football Store</span></p>
+    </div>
+
+    <!-- Form -->
+    <form id="loginForm" method="POST" class="space-y-5">
+      {% csrf_token %}
       
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-extrabold text-blue-600 mb-2">Sign In</h1>
-        <p class="text-gray-600">Welcome back to <span class="font-semibold">Football Store</span></p>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+        <input 
+          type="text" 
+          name="username" 
+          required
+          placeholder="Enter your username"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+        >
       </div>
 
-      <!-- Form Errors -->
-      {% if form.non_field_errors %}
-        <div class="mb-6 space-y-2">
-          {% for error in form.non_field_errors %}
-            <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
-              {{ error }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% if form.errors %}
-        <div class="mb-6 space-y-2">
-          {% for field, errors in form.errors.items %}
-            {% if field != '__all__' %}
-              {% for error in errors %}
-                <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
-                  <strong>{{ field|title }}:</strong> {{ error }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <!-- Login Form -->
-      <form method="POST" action="" class="space-y-6">
-        {% csrf_token %}
-        
-        <div>
-          <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-          <input 
-            id="username" 
-            name="username" 
-            type="text" 
-            required 
-            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-            placeholder="Enter your username">
-        </div>
-
-        <div>
-          <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-          <input 
-            id="password" 
-            name="password" 
-            type="password" 
-            required 
-            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-            placeholder="Enter your password">
-        </div>
-
-        <button 
-          type="submit" 
-          class="w-full bg-blue-600 text-white font-medium py-3 px-4 rounded-md hover:bg-blue-700 shadow-sm transition-colors">
-          Sign In
-        </button>
-      </form>
-
-      <!-- Messages -->
-      {% if messages %}
-        <div class="mt-6 space-y-2">
-          {% for message in messages %}
-            <div 
-              class="
-                px-4 py-3 rounded-md text-sm border
-                {% if message.tags == 'success' %}
-                  bg-green-50 border-green-200 text-green-700
-                {% elif message.tags == 'error' %}
-                  bg-red-50 border-red-200 text-red-700
-                {% else %}
-                  bg-gray-50 border-gray-200 text-gray-700
-                {% endif %}
-              ">
-              {{ message }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <!-- Footer -->
-      <div class="mt-8 text-center pt-6 border-t border-gray-200">
-        <p class="text-gray-500 text-sm">
-          Don’t have an account? 
-          <a href="{% url 'main:register' %}" class="text-blue-600 hover:text-blue-700 font-medium">
-            Register Now
-          </a>
-        </p>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+        <input 
+          type="password" 
+          name="password" 
+          required
+          placeholder="Enter your password"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+        >
       </div>
+
+      <button 
+        type="submit"
+        class="w-full bg-blue-600 text-white font-medium py-3 px-4 rounded-md hover:bg-blue-700 transition-colors shadow-sm"
+      >
+        Sign In
+      </button>
+    </form>
+
+    <!-- Login message -->
+    <div id="loginMessage" class="text-center mt-4 text-sm"></div>
+
+    <!-- Footer -->
+    <div class="mt-8 text-center pt-6 border-t border-gray-200">
+      <p class="text-gray-500 text-sm">
+        Don’t have an account? 
+        <a href="{% url 'main:register' %}" class="text-blue-600 hover:text-blue-700 font-medium">
+          Register Now
+        </a>
+      </p>
     </div>
   </div>
-</div>
-{% endblock content %}
+</section>
 
 <script>
-document.querySelector("form").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const response = await fetch("{% url 'main:login_ajax' %}", {
-    method: "POST",
-    body: formData,
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-  });
-  if (response.ok) {
-    showToast("Login berhasil!", "", "success");
-    setTimeout(() => window.location.href = "{% url 'main:show_main' %}", 1000);
-  } else {
-    showToast("Login gagal", "Periksa username atau password", "error");
-  }
-});
-</script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("loginForm");
+    const messageBox = document.getElementById("loginMessage");
 
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      try {
+        const response = await fetch("", {
+          method: "POST",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": csrfToken,
+          },
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.status === "success") {
+          messageBox.innerHTML = `<p class="text-green-600 font-medium mt-2">✅ Login berhasil! Mengarahkan...</p>`;
+          setTimeout(() => (window.location.href = "/"), 1000);
+        } else if (data.status === "error") {
+          let errMsg = "";
+          for (const [key, value] of Object.entries(data.errors)) {
+            errMsg += `<p>${key}: ${value.join(", ")}</p>`;
+          }
+          messageBox.innerHTML = `<div class="text-red-600 font-medium mt-2">❌ ${errMsg}</div>`;
+        } else {
+          messageBox.innerHTML = `<p class="text-red-600">Terjadi kesalahan tak terduga.</p>`;
+        }
+      } catch (error) {
+        console.error(error);
+        messageBox.innerHTML = `<p class="text-red-600">Gagal terhubung ke server.</p>`;
+      }
+    });
+  });
+</script>
+{% endblock content %}

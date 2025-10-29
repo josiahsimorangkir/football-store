@@ -23,8 +23,5 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    def increment_views(self):
-        self.product_views += 1
-        self.save()
     
     

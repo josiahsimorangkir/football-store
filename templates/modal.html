@@ -112,7 +112,7 @@
 </div>
 
 <script>
-  let productToDelete = null;
+  var productToDelete = productToDelete || null;
 
 function showDeleteModal(productId) {
   productToDelete = productId;
@@ -126,19 +126,18 @@ function hideDeleteModal() {
 document.getElementById("confirmDeleteBtn").addEventListener("click", async function() {
   if (!productToDelete) return;
 
-  const response = await fetch(`/product/${productToDelete}/delete`, {
+  const response = await fetch(`/delete-product/${productToDelete}/`, {
+  method: "POST",
+  headers: { "X-CSRFToken": getCookie("csrftoken") },
+});
 
-    method: "POST",
-    headers: { "X-CSRFToken": getCookie("csrftoken") },
-  });
-
-  hideDeleteModal();
   if (response.ok) {
     showToast("Product deleted successfully!", "", "success");
-    document.dispatchEvent(new CustomEvent("productAdded"));
-  } else {
+    hideDeleteModal();
+    fetchProductFromServer(); // langsung refresh list
+} else {
     showToast("Failed to delete product", "", "error");
-  }
+}
 });
 
 async function showEditModal(productId) {
@@ -183,22 +182,25 @@ function hideEditModal() {
 
 document.getElementById("editProductForm").addEventListener("submit", async function(e) {
   e.preventDefault();
-  const formData = new FormData(this);
 
-  const productId = formData.get("id");
+  const formData = new FormData(this);
+  const csrftoken = getCookie("csrftoken");
+
   const response = await fetch("{% url 'main:edit_product_entry_ajax' %}", {
-  method: "POST",
-  body: formData,
-});
+    method: "POST",
+    headers: { "X-CSRFToken": csrftoken },
+    body: formData,
+  });
 
   if (response.ok) {
     showToast("Product updated successfully!", "", "success");
     hideEditModal();
-    document.dispatchEvent(new CustomEvent("productAdded"));
-  } else {
+    fetchProductFromServer(); // panggil refresh list di sini
+} else {
     showToast("Failed to update product", "", "error");
-  }
+}
 });
+
   function showModal() {
       const modal = document.getElementById('crudModal');
       const modalContent = document.getElementById('crudModalContent');
@@ -220,23 +222,46 @@ document.getElementById("editProductForm").addEventListener("submit", async func
   }
 
   async function addProductEntry() {
-    fetch("{% url 'main:edit_product_entry_ajax' %}", {
-  method: "POST",
-  body: new FormData(document.querySelector('#editProductForm')),
+  const form = document.querySelector('#productForm');
+  const formData = new FormData(form);
+
+  const response = await fetch("{% url 'main:add_product_entry_ajax' %}", {
+    method: "POST",
+    body: formData,
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+  });
+
+  if (response.ok) {
+    form.reset();
+    hideModal();
+    showToast('Product added successfully!', '', 'success');
+    document.dispatchEvent(new CustomEvent('productAdded'));
+  } else {
+    showToast('Failed to add product!', '', 'error');
+  }
+}
+
+document.getElementById("productForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  addProductEntry();
 });
 
-    if (response.ok) {
-      document.getElementById("productForm").reset();
-      hideModal();
-      showToast('Product added successfully!', '', 'success');
-      document.dispatchEvent(new CustomEvent('productAdded'));
-    } else {
-      showToast('Failed to add product!', '', 'error');
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Check if this cookie string begins with the name we want
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
     }
   }
+  return cookieValue;
+}
 
-  document.getElementById("productForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    addProductEntry();
-  });
 </script>
