@@ -88,6 +88,25 @@ def show_json(request):
     ]
     return JsonResponse(data, safe=False)
 
+def show_json_by_user(request):
+    
+    product_list = Product.objects.filter(user=request.user)
+    data = [
+        {
+            'id': str(p.id),
+            'name': p.name,
+            'description': p.description,
+            'price': p.price,
+            'category': p.category,
+            'thumbnail': p.thumbnail,
+            'created_at': p.created_at.isoformat() if p.created_at else None,
+            'is_featured': p.is_featured,
+            'user_id': p.user_id,
+        }
+        for p in product_list
+    ]
+    return JsonResponse(data, safe=False)
+
 
 def show_xml_by_id(request, product_id):
     try:
